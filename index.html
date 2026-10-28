@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SEMS — Sinozam Elections Management System</title>
+<meta name="description" content="SINOZAM ELECTIONS MANAGEMENT SYSTEM (SEMS) — election administration, candidate nominations and vetting, voter registration, voting, results and announcements for Sinozam Vocational College. Formerly SinoVotes." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">SEMS</span> <span class="brand-name">Sinozam Elections<small>Management System</small></span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#announcements">Announcements</a>
+      <a href="index.html#candidates">Candidates</a>
+      <a href="verify.html">Verify receipt</a>
+      <a href="admin/login.html">Committee login</a>
+    </div>
+  </div>
+</nav>
+
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Sinozam Elections Management System · Electoral Committee</div>
+    <h1 id="election-title">Loading the current election…</h1>
+    <p class="lead" id="election-desc"></p>
+
+    <div class="hero-actions">
+      <span class="status-pill" id="status-pill"><span class="status-dot"></span><span id="status-text">—</span></span>
+      <a class="btn btn-primary" id="vote-cta" href="#" style="display:none;">Cast Your Vote →</a>
+      <a class="btn btn-gold" id="nominate-cta" href="#" style="display:none;">Submit Nomination</a>
+      <a class="btn btn-ghost" id="results-cta" href="#" style="display:none;">View Results</a>
+    </div>
+
+    <div class="countdown" id="countdown" style="display:none;"></div>
+  </div>
+</header>
+<section class="section" id="announcements">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Bulletin</div>
+        <h2>Announcements</h2>
+        <p>Dates, campaign notices, debates and voting reminders from the Electoral Committee.</p>
+      </div>
+    </div>
+    <div class="grid grid-3" id="announcements-list">
+      <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="candidates">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">On the ballot</div>
+        <h2>Candidates</h2>
+        <p>Read each candidate's manifesto before you vote.</p>
+      </div>
+    </div>
+    <div id="candidates-by-position"></div>
+  </div>
+</section>
+
+<section class="section" id="rules">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Before you vote</div>
+        <h2>Election rules</h2>
+      </div>
+    </div>
+    <div class="grid grid-3">
+      <div class="card">
+        <h3>One vote, once</h3>
+        <p>Each exam number can vote a single time per election. There is no way to change a vote after it's submitted.</p>
+      </div>
+      <div class="card">
+        <h3>Your ballot is secret</h3>
+        <p>Your exam number is checked to confirm eligibility, but it is never stored alongside your selections.</p>
+      </div>
+      <div class="card">
+        <h3>Results stay hidden until closing</h3>
+        <p>No running counts or leading candidates are shown while voting is open — results publish only after the election closes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <span>© <span id="year"></span> SINOZAM ELECTIONS MANAGEMENT SYSTEM (SEMS) · Sinozam Vocational College Electoral Committee · Formerly SinoVotes</span>
+      <span><a href="verify.html">Verify a receipt</a> &nbsp;·&nbsp; <a href="admin/login.html">Committee login</a></span>
+    </div>
+    <div class="footer-credits">
+      Developed by <span class="company-brand"><span class="brand-vecta">Vecta</span> <span class="brand-tech">Technologies</span></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/home.js"></script>
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

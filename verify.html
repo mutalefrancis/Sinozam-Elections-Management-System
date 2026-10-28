@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Verify a receipt — SEMS</title>
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="brand-mark">SEMS</span> <span class="brand-name">Sinozam Elections<small>Management System</small></span></a>
+    <div class="nav-links"><a href="index.html">Home</a></div>
+  </div>
+</nav>
+
+<section class="section" style="padding-top:44px; min-height:80vh;">
+  <div class="wrap" style="max-width:520px;">
+    <div class="eyebrow">Receipt check</div>
+    <h1>Verify a receipt</h1>
+    <p style="color:var(--ink-soft); margin-bottom:24px;">Enter a receipt number to confirm it was actually recorded. This never shows who a receipt belongs to or what was voted for.</p>
+
+    <div class="field">
+      <label for="receipt-input">Receipt number</label>
+      <input type="text" id="receipt-input" placeholder="SV-2027-XXXXXXXX" />
+    </div>
+    <button class="btn btn-primary" id="verify-btn">Verify</button>
+
+    <div id="verify-result" style="margin-top:28px;"></div>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/verify.js"></script>
+</body>
+</html>

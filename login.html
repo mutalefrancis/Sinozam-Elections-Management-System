@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Committee login — SEMS</title>
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<div class="login-wrap">
+  <div class="login-card">
+    <div class="eyebrow" style="color:var(--stamp);">SEMS · Electoral Committee</div>
+    <h1 style="font-size:1.5rem; margin-bottom:24px;">Committee login</h1>
+
+    <div class="field">
+      <label for="email">Email</label>
+      <input type="email" id="email" style="text-transform:none; letter-spacing:normal; font-family:var(--body);" autocomplete="username" />
+    </div>
+    <div class="field">
+      <label for="password">Password</label>
+      <input type="password" id="password" style="text-transform:none; letter-spacing:normal; font-family:var(--body);" autocomplete="current-password" />
+    </div>
+    <div class="field-error" id="login-error"></div>
+    <button class="btn btn-primary btn-block" id="login-btn">Log in</button>
+    <p style="font-size:0.8rem; color:var(--ink-soft); margin-top:16px;">This login is for the Electoral Committee only. Students don't need an account to vote.</p>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-config.js"></script>
+<script>
+  const btn = document.getElementById("login-btn");
+  const err = document.getElementById("login-error");
+
+  async function checkSession() {
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    if (session) location.href = "dashboard.html";
+  }
+  checkSession();
+
+  btn.addEventListener("click", async () => {
+    err.style.display = "none";
+    btn.disabled = true;
+    btn.textContent = "Logging in…";
+
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+
+    if (error) {
+      err.textContent = "Incorrect email or password.";
+      err.style.display = "block";
+      btn.disabled = false;
+      btn.textContent = "Log in";
+      return;
+    }
+
+    // Confirm this account is actually in the admins table before letting them in.
+    const { data: admin } = await supabaseClient.from("admins").select("id").eq("id", data.user.id).single();
+    if (!admin) {
+      err.textContent = "This account isn't registered as an Electoral Committee member.";
+      err.style.display = "block";
+      await supabaseClient.auth.signOut();
+      btn.disabled = false;
+      btn.textContent = "Log in";
+      return;
+    }
+
+    location.href = "dashboard.html";
+  });
+</script>
+</body>
+</html>

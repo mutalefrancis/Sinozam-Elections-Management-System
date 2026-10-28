@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Candidate Self-Nomination — SEMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">SEMS</span> <span class="brand-name">Sinozam Elections<small>Management System</small></span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#announcements">Announcements</a>
+      <a href="index.html#candidates">Candidates</a>
+      <a href="verify.html">Verify receipt</a>
+    </div>
+  </div>
+</nav>
+
+<section class="section">
+  <div class="wrap" style="max-width: 640px;">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Electoral Committee</div>
+        <h2>Candidate Self-Nomination</h2>
+        <p>Submit your candidacy for vetting by the Electoral Committee.</p>
+      </div>
+    </div>
+
+    <form id="nomination-form" class="card">
+      <div class="field">
+        <label for="election_type">Election Type</label>
+        <select id="election_type" required class="field-select">
+          <option value="">-- Select Election Category --</option>
+          <option value="EIZ">Engineering Institution of Zambia (EIZ)</option>
+          <option value="SZARC">Sinozam Automation & Robotics Club (SZARC)</option>
+          <option value="Student Council">Student Council</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="full_name">Full Name</label>
+        <input type="text" id="full_name" required placeholder="e.g. John Doe">
+      </div>
+
+      <div class="field">
+        <label for="exam_number">Exam / Student Number</label>
+        <input type="text" id="exam_number" required placeholder="e.g. SIN/2026/01">
+      </div>
+
+      <div class="field">
+        <label for="program">Academic Program</label>
+        <input type="text" id="program" required placeholder="e.g. Diploma in Automation Technology">
+      </div>
+
+      <div class="field">
+        <label for="position_id">Position Contested</label>
+        <select id="position_id" required class="field-select">
+          <option value="">-- Select Position --</option>
+        </select>
+      </div>
+
+      <!-- Candidate Portrait / Headshot Field -->
+      <div class="field">
+        <label for="photo_file">Candidate Photo / Headshot (JPG/PNG) *</label>
+        <input type="file" id="photo_file" accept="image/jpeg,image/png,image/jpg" required>
+      </div>
+
+      <!-- EIZ Conditional Fields -->
+      <div id="eiz-section" style="display: none; background: #faf9f6; padding: 16px; border: 1px dashed var(--stole-red); border-radius: 4px; margin-bottom: 20px;">
+        <div class="field">
+          <label for="eiz_number">EIZ Membership Number *</label>
+          <input type="text" id="eiz_number" placeholder="e.g. EIZ-102938">
+        </div>
+
+        <div class="field">
+          <label>EIZ Membership Payment Status *</label>
+          <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 6px;">
+            <label><input type="radio" name="membership_status" value="recent"> Recently Paid-Up (Receipt Required)</label>
+            <label><input type="radio" name="membership_status" value="long_term"> Long-Time Paid-Up Member</label>
+          </div>
+        </div>
+
+        <div class="field" id="receipt-field" style="display: none;">
+          <label for="receipt_file">Upload Payment Receipt (JPG/PNG) *</label>
+          <input type="file" id="receipt_file" accept="image/jpeg,image/png,image/jpg">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="manifesto">Manifesto / Summary</label>
+        <textarea id="manifesto" rows="4" required placeholder="State your vision..." style="width:100%; padding: 10px; font-family: var(--body);"></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block" id="submit-btn">Submit Nomination</button>
+    </form>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/nominate.js"></script>
+</body>
+</html>

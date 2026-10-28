@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dashboard — SEMS Committee</title>
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<div class="admin-shell">
+  <aside class="admin-sidebar">
+    <div class="brand" style="margin-bottom:28px;"><span class="brand-mark">SEMS</span> Committee</div>
+    <a href="dashboard.html" class="active">Dashboard</a>
+    <a href="#elections-panel">Elections</a>
+    <a href="#roster-panel">Import Roster</a>
+    <a href="#announcements-panel">Announcements</a>
+    <a href="../index.html">View public site</a>
+    <a href="#" id="logout-link">Log out</a>
+  </aside>
+
+  <main class="admin-main">
+    <h1 style="margin-bottom:4px;">Dashboard</h1>
+    <p style="color:var(--ink-soft); margin-bottom:28px;" id="welcome-line">—</p>
+
+    <div class="grid grid-3" style="margin-bottom:40px;">
+      <div class="stat-card"><div class="num" id="stat-eligible">—</div><div class="label">Eligible students</div></div>
+      <div class="stat-card"><div class="num" id="stat-voted">—</div><div class="label">Votes cast</div></div>
+      <div class="stat-card"><div class="num" id="stat-turnout">—</div><div class="label">Turnout</div></div>
+    </div>
+
+    <section id="elections-panel" style="margin-bottom:44px;">
+      <h2 style="font-size:1.2rem; border-bottom:2px solid var(--ink); padding-bottom:10px; margin-bottom:16px;">Elections</h2>
+
+      <div class="card" style="margin-bottom:20px; max-width:520px;">
+        <h3 style="margin-bottom:14px;">Create a new election</h3>
+        <div class="field" style="margin-top:0;">
+          <label for="elec-title">Title</label>
+          <input type="text" id="elec-title" style="text-transform:none; letter-spacing:normal; font-family:var(--body);" />
+        </div>
+        <div class="field">
+          <label for="elec-desc">Description</label>
+          <input type="text" id="elec-desc" style="text-transform:none; letter-spacing:normal; font-family:var(--body);" />
+        </div>
+        <div class="field">
+          <label for="elec-start">Start time</label>
+          <input type="datetime-local" id="elec-start" style="text-transform:none; letter-spacing:normal; font-family:var(--body);" />
+        </div>
+        <div class="field">
+          <label for="elec-end">End time</label>
+          <input type="datetime-local" id="elec-end" style="text-transform:none; letter-spacing:normal; font-family:var(--body);" />
+        </div>
+        <button class="btn btn-primary btn-sm" id="create-elec-btn">Create election</button>
+        <p style="font-size:0.78rem; color:var(--ink-soft); margin-top:10px; margin-bottom:0;">Created as "Scheduled" — add positions and candidates in Supabase's table editor, then switch it to "Open" below when voting should start.</p>
+      </div>
+
+      <div id="elections-list"></div>
+    </section>
+    <!-- Nominations Vetting Section -->
+<div class="card" style="margin-top: 24px;">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+    <h3>Candidate Nominations Vetting</h3>
+    
+    <!-- Tab Controls -->
+    <div style="display: flex; gap: 8px;">
+      <button class="btn btn-ghost btn-sm nomination-tab-btn active" data-status="pending">Pending</button>
+      <button class="btn btn-ghost btn-sm nomination-tab-btn" data-status="approved">Approved</button>
+      <button class="btn btn-ghost btn-sm nomination-tab-btn" data-status="rejected">Rejected</button>
+    </div>
+  </div>
+
+  <table class="data-table" style="width: 100%; border-collapse: collapse;">
+    <thead>
+      <tr style="text-align: left; border-bottom: 1px solid var(--border);">
+        <th style="padding: 8px;">Candidate</th>
+        <th style="padding: 8px;">Election / Position</th>
+        <th style="padding: 8px;">Prerequisites</th>
+        <th style="padding: 8px;">Receipt</th>
+        <th style="padding: 8px;">Status</th>
+        <th style="padding: 8px;">Actions</th>
+      </tr>
+    </thead>
+    <tbody id="nominations-admin-list">
+      <!-- Rendered dynamically -->
+    </tbody>
+  </table>
+</div>
+
+<!-- Rejection Reason Modal -->
+<div id="reject-modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; z-index: 1000;">
+  <div class="card" style="width: 100%; max-width: 440px; background: #fff; padding: 20px;">
+    <h3>Reject Candidate Nomination</h3>
+    <p class="meta" style="margin-bottom: 12px;">Specify the reason for rejection (logged for internal committee records):</p>
+    <textarea id="rejection-reason-input" rows="3" placeholder="e.g. Unverified EIZ membership number..." style="width: 100%; padding: 8px; margin-bottom: 16px;"></textarea>
+    <div style="display: flex; gap: 8px; justify-content: flex-end;">
+      <button onclick="closeRejectModal()" class="btn btn-ghost">Cancel</button>
+      <button id="confirm-reject-btn" class="btn btn-ghost" style="color: var(--stamp); border-color: var(--stamp);">Confirm Rejection</button>
+    </div>
+  </div>
+</div>
+
+    <!-- Student Roster Import Section -->
+    <section id="roster-panel" style="margin-bottom:44px;">
+      <h2 style="font-size:1.2rem; border-bottom:2px solid var(--ink); padding-bottom:10px; margin-bottom:16px;">Voter Roster Import</h2>
+
+      <div class="card" style="margin-bottom:20px; max-width:520px;">
+        <h3 style="margin-bottom:8px;">Import Student CSV File</h3>
+        <p style="font-size:0.85rem; color:var(--ink-soft); margin-bottom:16px;">
+          Select an active election above, then upload an Excel CSV file containing exam/student numbers in Column A.
+        </p>
+
+        <div class="field" style="margin-top:0;">
+          <label for="csv-file-input">Select CSV Document</label>
+          <input type="file" id="csv-file-input" accept=".csv" style="padding: 8px 0;" />
+        </div>
+
+        <button class="btn btn-primary btn-sm" id="upload-csv-btn">Upload & Register Voters</button>
+      </div>
+    </section>
+
+    <section id="announcements-panel">
+      <h2 style="font-size:1.2rem; border-bottom:2px solid var(--ink); padding-bottom:10px; margin-bottom:16px;">Announcements</h2>
+
+      <div class="card" style="margin-bottom:20px; max-width:520px;">
+        <div class="field" style="margin-top:0;">
+          <label for="ann-title">Title</label>
+          <input type="text" id="ann-title" style="text-transform:none; letter-spacing:normal; font-family:var(--body);" />
+        </div>
+        <div class="field">
+          <label for="ann-body">Body</label>
+          <input type="text" id="ann-body" style="text-transform:none; letter-spacing:normal; font-family:var(--body);" />
+        </div>
+        <button class="btn btn-primary btn-sm" id="post-ann-btn">Publish announcement</button>
+      </div>
+
+      <div id="announcements-admin-list"></div>
+    </section>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-config.js"></script>
+<script src="../js/common.js"></script>
+<script src="../js/admin.js"></script>
+</body>
+</html>

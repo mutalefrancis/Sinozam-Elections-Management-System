@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Build ballot — SEMS Committee</title>
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<div class="admin-shell">
+  <aside class="admin-sidebar">
+    <div class="brand" style="margin-bottom:28px;"><span class="brand-mark">SEMS</span> Committee</div>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="ballot.html" class="active">Ballot builder</a>
+    <a href="../index.html">View public site</a>
+    <a href="#" id="logout-link">Log out</a>
+  </aside>
+
+  <main class="admin-main">
+    <p><a href="dashboard.html" style="color:var(--ink-soft); font-size:0.85rem;">← Back to dashboard</a></p>
+    <h1 style="margin-bottom:4px;" id="election-title">Loading…</h1>
+    <p style="color:var(--ink-soft); margin-bottom:32px;">Add every position up for election, then add candidates under each one. Students will vote on exactly what's here.</p>
+
+    <div id="no-election" style="display:none;" class="empty-state">No election specified. Go back to the dashboard and click "Edit ballot" on one.</div>
+
+    <div id="builder" style="display:none;">
+      <div class="card" style="margin-bottom:28px; max-width:480px;">
+        <h3 style="margin-bottom:14px;">Add a position</h3>
+        <div class="field" style="margin-top:0;">
+          <label for="pos-name">Position name</label>
+          <input type="text" id="pos-name" placeholder="e.g. President" style="text-transform:none; letter-spacing:normal; font-family:var(--body);" />
+        </div>
+        <div class="field">
+          <label for="pos-order">Ballot order</label>
+          <input type="number" id="pos-order" placeholder="1" min="0" style="text-transform:none; letter-spacing:normal; font-family:var(--body);" />
+        </div>
+        <button class="btn btn-primary btn-sm" id="add-pos-btn">Add position</button>
+      </div>
+
+      <div id="positions-list"></div>
+    </div>
+  </main>
+</div>
+
+<!-- Add candidate modal -->
+<div class="modal-backdrop" id="cand-modal">
+  <div class="modal">
+    <h3>Add candidate</h3>
+    <p id="cand-modal-position"></p>
+    <div class="field">
+      <label for="cand-name">Full name</label>
+      <input type="text" id="cand-name" style="text-transform:none; letter-spacing:normal; font-family:var(--body);" />
+    </div>
+    <div class="field">
+      <label for="cand-course">Program / course</label>
+      <input type="text" id="cand-course" placeholder="e.g. Diploma in IT, Year 2" style="text-transform:none; letter-spacing:normal; font-family:var(--body);" />
+    </div>
+    <div class="field">
+      <label for="cand-manifesto">Manifesto (optional)</label>
+      <input type="text" id="cand-manifesto" style="text-transform:none; letter-spacing:normal; font-family:var(--body);" />
+    </div>
+    <div class="field">
+      <label for="cand-photo">Photo (optional)</label>
+      <input type="file" id="cand-photo" accept="image/*" style="text-transform:none; letter-spacing:normal; font-family:var(--body); padding:8px;" />
+      <img id="cand-photo-preview" style="display:none; margin-top:10px; width:100%; max-width:160px; aspect-ratio:4/3; object-fit:cover; border-radius:4px; border:1px solid #d7d2c4;" />
+    </div>
+    <div class="field-error" id="cand-error"></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="cand-cancel">Cancel</button>
+      <button class="btn btn-primary btn-block" id="cand-save">Add candidate</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-config.js"></script>
+<script src="../js/common.js"></script>
+<script src="../js/ballot.js"></script>
+</body>
+</html>

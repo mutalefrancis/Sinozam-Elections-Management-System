@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vote submitted — SEMS</title>
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="brand-mark">SEMS</span> <span class="brand-name">Sinozam Elections<small>Management System</small></span></a>
+    <div class="nav-links"><a href="index.html">Home</a></div>
+  </div>
+</nav>
+
+<div class="success-wrap">
+  <div>
+    <div class="stamp-seal">
+      <div class="stamp-check">✓</div>
+      <div class="stamp-text">Recorded</div>
+    </div>
+    <h1>Vote successfully submitted</h1>
+    <p style="color:var(--paper-dim); max-width:40ch; margin:0 auto;">Thank you for participating in Sinozam Vocational College's student election. Your selections have not been stored anywhere — only your receipt confirms you voted.</p>
+
+    <div class="receipt-box">
+      <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--paper-dim); margin-bottom:6px;">Receipt number</div>
+      <div class="receipt-id" id="receipt-id">—</div>
+    </div>
+
+    <p style="margin-top:28px;"><a class="btn btn-ghost" href="index.html">Back to home</a></p>
+  </div>
+</div>
+
+<script>
+  const p = new URLSearchParams(location.search);
+  document.getElementById("receipt-id").textContent = p.get("receipt") || "—";
+</script>
+</body>
+</html>

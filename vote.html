@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cast your vote — SEMS</title>
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="brand-mark">SEMS</span> <span class="brand-name">Sinozam Elections<small>Management System</small></span></a>
+    <div class="nav-links"><a href="index.html">Home</a></div>
+  </div>
+</nav>
+
+<section class="section" style="padding-top:44px;">
+  <div class="wrap" style="max-width:880px;">
+
+    <div id="ballot-loading">
+      <p class="mono">Loading ballot…</p>
+    </div>
+
+    <div id="ballot-blocked" style="display:none;">
+      <div class="empty-state" id="blocked-message"></div>
+      <p style="text-align:center;"><a class="btn btn-ghost" href="index.html">Back to home</a></p>
+    </div>
+
+    <div id="ballot-view" style="display:none;">
+      <div class="progress" id="progress"></div>
+      <div class="eyebrow" id="election-name-tag"></div>
+      <h1 id="ballot-title" style="margin-bottom:6px;">Cast your ballot</h1>
+      <p style="color:var(--ink-soft); margin-bottom:32px;">Choose one candidate for every position, then review before you submit.</p>
+
+      <!-- Glassmorphism Candidate Cards dynamically mount here -->
+      <div id="positions-container" class="grid grid-3"></div>
+
+      <div style="display:flex; justify-content:flex-end; margin-top:32px;">
+        <button class="btn btn-primary" id="to-review-btn">Review my selections →</button>
+      </div>
+    </div>
+
+    <div id="review-view" style="display:none;">
+      <div class="progress" id="progress-review"></div>
+      <h1 style="margin-bottom:6px;">Review your vote</h1>
+      <p style="color:var(--ink-soft); margin-bottom:24px;">Check this carefully — once submitted, votes can't be changed.</p>
+      <div id="review-rows"></div>
+      <div style="display:flex; justify-content:space-between; margin-top:28px;">
+        <button class="btn btn-ghost" id="back-btn">← Back</button>
+        <button class="btn btn-primary" id="submit-btn">Submit vote</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Exam number verification modal -->
+<div class="modal-backdrop" id="exam-modal">
+  <div class="modal">
+    <h3>Confirm it's you</h3>
+    <p>Enter your exam number to submit this ballot.</p>
+    <div class="field">
+      <label for="exam-input">Exam number</label>
+      <input type="text" id="exam-input" placeholder="e.g. SIN240123" autocomplete="off" />
+      <div class="field-error" id="exam-error"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="exam-cancel">Cancel</button>
+      <button class="btn btn-primary btn-block" id="exam-confirm">Confirm &amp; submit</button>
+    </div>
+  </div>
+</div>
+
+<!-- Template snippet for JS dynamic rendering (vote.js) -->
+<template id="glass-candidate-template">
+  <div class="candidate-card-glass" style="background-image: url('{{PHOTO_URL}}');">
+    <div class="glass-panel-dark">
+      <h3 class="glass-candidate-name">{{CANDIDATE_NAME}}</h3>
+      <div class="glass-candidate-program">{{PROGRAMME}}</div>
+      <p class="glass-candidate-manifesto">{{MANIFESTO}}</p>
+      <button class="glass-action-btn" type="button">Select Candidate</button>
+    </div>
+  </div>
+</template>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/vote.js"></script>
+</body>
+</html>
